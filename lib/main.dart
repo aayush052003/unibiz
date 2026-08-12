@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:cloudinary_url_gen/cloudinary.dart';
 import 'helper/hive_service.dart';
 import 'route_config/route.dart';
 
@@ -17,6 +18,11 @@ void main() async {
   await Supabase.initialize(
     url: dotenv.env['SUPABASE_URL'] ?? '',
     anonKey: dotenv.env['SUPABASE_ANON_KEY'] ?? '',
+  );
+
+  // Initialize Cloudinary
+  Cloudinary.fromStringUrl(
+    'cloudinary://${dotenv.env['CLOUDINARY_API_KEY']}:${dotenv.env['CLOUDINARY_API_SECRET']}@${dotenv.env['CLOUDINARY_CLOUD_NAME']}',
   );
 
   runApp(const MyApp());
