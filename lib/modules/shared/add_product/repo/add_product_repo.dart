@@ -13,6 +13,7 @@ class AddProductRepo {
     required String sellingUnit,
     required num unitsPerPack,
     required String imageUrl,
+    required int minStockThreshold,
   }) async {
     await _client.from('products').insert({
       'business_id': businessId,
@@ -21,6 +22,7 @@ class AddProductRepo {
       'selling_unit': sellingUnit,
       'units_per_pack': unitsPerPack,
       'image_url': imageUrl,
+      'min_stock_threshold': minStockThreshold,
     });
   }
 }

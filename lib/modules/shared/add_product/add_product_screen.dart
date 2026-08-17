@@ -519,6 +519,38 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             .copyWith(color: AppColors.error, fontSize: 12),
                       ),
                     ],
+                    const SizedBox(height: 20),
+
+                    // 7. Minimum Stock Alert
+                    TextFormField(
+                      enabled: !isDisabled,
+                      keyboardType: TextInputType.number,
+                      decoration: AppStyles.inputDecoration(
+                        labelText: state.sellingUnit.trim().isNotEmpty
+                            ? 'Minimum Stock Alert (in ${state.sellingUnit.trim()})'
+                            : 'Minimum Stock Alert',
+                        hintText: 'Example: 50',
+                      ),
+                      style: AppStyles.body,
+                      onChanged: (val) {
+                        context
+                            .read<AddProductBloc>()
+                            .add(AddProductMinStockThresholdChanged(val));
+                      },
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      'We will show a Low Stock warning when available quantity falls below this number. Example: enter 50 if you want a warning when stock goes below 50 Tablets',
+                      style: AppStyles.label.copyWith(fontSize: 12),
+                    ),
+                    if (state.minStockThresholdError != null) ...[
+                      const SizedBox(height: 4),
+                      Text(
+                        state.minStockThresholdError!,
+                        style: AppStyles.body
+                            .copyWith(color: AppColors.error, fontSize: 12),
+                      ),
+                    ],
                     const SizedBox(height: 32),
 
                     // Submit Button

@@ -135,7 +135,7 @@ class _ManagerHomeScreenState extends State<ManagerHomeScreen> {
                 children: [
                   const ManagerHomeTab(),
                   const ManagerSalesTab(),
-                  const ManagerStockTab(),
+                  ManagerStockTab(businessId: businessId),
                   ManagerProductsTab(businessId: businessId),
                   const ManagerManageTab(),
                 ],

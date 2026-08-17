@@ -61,3 +61,12 @@ class AddProductSubmitted extends AddProductEvent {
   @override
   List<Object?> get props => [businessId];
 }
+
+class AddProductMinStockThresholdChanged extends AddProductEvent {
+  final String minStockThreshold;
+
+  const AddProductMinStockThresholdChanged(this.minStockThreshold);
+
+  @override
+  List<Object?> get props => [minStockThreshold];
+}

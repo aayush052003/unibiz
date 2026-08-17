@@ -21,6 +21,7 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
     on<AddProductBuyingUnitChanged>(_onBuyingUnitChanged);
     on<AddProductSellingUnitChanged>(_onSellingUnitChanged);
     on<AddProductUnitsPerPackChanged>(_onUnitsPerPackChanged);
+    on<AddProductMinStockThresholdChanged>(_onMinStockThresholdChanged);
     on<AddProductSubmitted>(_onSubmitted);
   }
 
@@ -74,6 +75,16 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
     ));
   }
 
+  void _onMinStockThresholdChanged(
+    AddProductMinStockThresholdChanged event,
+    Emitter<AddProductState> emit,
+  ) {
+    emit(state.copyWith(
+      minStockThreshold: event.minStockThreshold,
+      minStockThresholdError: null,
+    ));
+  }
+
   Future<void> _onSubmitted(
     AddProductSubmitted event,
     Emitter<AddProductState> emit,
@@ -85,6 +96,7 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
     String? buyingUnitErr;
     String? sellingUnitErr;
     String? unitsPerPackErr;
+    String? minStockThresholdErr;
 
     if (state.selectedImage == null) {
       imageErr = 'Please add a product image';
@@ -112,6 +124,17 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
       hasError = true;
     }
 
+    int parsedMinStock = 0;
+    if (state.minStockThreshold.trim().isNotEmpty) {
+      final parsed = int.tryParse(state.minStockThreshold.trim());
+      if (parsed == null || parsed <= 0) {
+        minStockThresholdErr = 'Minimum stock alert must be greater than 0';
+        hasError = true;
+      } else {
+        parsedMinStock = parsed;
+      }
+    }
+
     if (hasError) {
       emit(state.copyWith(
         imageError: imageErr,
@@ -119,6 +142,7 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
         buyingUnitError: buyingUnitErr,
         sellingUnitError: sellingUnitErr,
         unitsPerPackError: unitsPerPackErr,
+        minStockThresholdError: minStockThresholdErr,
       ));
       return;
     }
@@ -164,6 +188,7 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
         sellingUnit: state.sellingUnit.trim(),
         unitsPerPack: parsedUnits!,
         imageUrl: imageUrl,
+        minStockThreshold: parsedMinStock,
       );
 
       emit(state.copyWith(status: FormzSubmissionStatus.success));

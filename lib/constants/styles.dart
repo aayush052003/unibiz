@@ -27,6 +27,7 @@ class AppStyles {
     required String hintText,
     required String labelText,
     Widget? suffixIcon,
+    Widget? prefixIcon,
   }) {
     return InputDecoration(
       hintText: hintText,
@@ -36,6 +37,7 @@ class AppStyles {
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       filled: true,
       fillColor: AppColors.surface,
+      prefixIcon: prefixIcon,
       suffixIcon: suffixIcon,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
