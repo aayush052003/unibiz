@@ -86,7 +86,7 @@ class _DashboardScreenState extends State<DashboardScreen> with RouteAware {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Income',
+                      'Revenue Today',
                       style: AppStyles.label.copyWith(
                         color: Colors.white.withOpacity(0.7),
                         fontSize: 12,
@@ -94,7 +94,7 @@ class _DashboardScreenState extends State<DashboardScreen> with RouteAware {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      _formatAmount(state.totalIncomeToday),
+                      _formatAmount(state.totalRevenueToday),
                       style: AppStyles.heading.copyWith(
                         color: Colors.white,
                         fontSize: 18,
@@ -109,30 +109,7 @@ class _DashboardScreenState extends State<DashboardScreen> with RouteAware {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Expense',
-                      style: AppStyles.label.copyWith(
-                        color: Colors.white.withOpacity(0.7),
-                        fontSize: 12,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      _formatAmount(state.totalExpenseToday),
-                      style: AppStyles.heading.copyWith(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Profit',
+                      'Profit Today',
                       style: AppStyles.label.copyWith(
                         color: Colors.white.withOpacity(0.7),
                         fontSize: 12,
@@ -187,29 +164,12 @@ class _DashboardScreenState extends State<DashboardScreen> with RouteAware {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Income Today',
+                      'Revenue Today',
                       style: AppStyles.label.copyWith(fontSize: 12),
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      _formatAmount(business.incomeToday),
-                      style: AppStyles.body.copyWith(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Expense Today',
-                      style: AppStyles.label.copyWith(fontSize: 12),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      _formatAmount(business.expenseToday),
+                      _formatAmount(business.revenueToday),
                       style: AppStyles.body.copyWith(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
@@ -230,9 +190,7 @@ class _DashboardScreenState extends State<DashboardScreen> with RouteAware {
                       style: AppStyles.body.copyWith(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
-                        color: business.profitToday >= 0
-                            ? AppColors.textPrimary
-                            : AppColors.error,
+                        color: Colors.green.shade700,
                       ),
                     ),
                   ],

@@ -28,8 +28,8 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         status: FormzSubmissionStatus.success,
         hasBusinesses: dashboardData.hasBusinesses,
         businesses: dashboardData.businesses,
-        totalIncomeToday: dashboardData.totalIncomeToday,
-        totalExpenseToday: dashboardData.totalExpenseToday,
+        totalRevenueToday: dashboardData.totalRevenueToday,
+        totalProfitToday: dashboardData.totalProfitToday,
       ));
     } catch (e) {
       emit(state.copyWith(

@@ -4,35 +4,33 @@ class DashboardState extends Equatable {
   final FormzSubmissionStatus status;
   final bool hasBusinesses;
   final List<DashboardBusinessModel> businesses;
-  final double totalIncomeToday;
-  final double totalExpenseToday;
+  final double totalRevenueToday;
+  final double totalProfitToday;
   final String? errorMessage;
 
   const DashboardState({
     this.status = FormzSubmissionStatus.initial,
     this.hasBusinesses = false,
     this.businesses = const [],
-    this.totalIncomeToday = 0.0,
-    this.totalExpenseToday = 0.0,
+    this.totalRevenueToday = 0.0,
+    this.totalProfitToday = 0.0,
     this.errorMessage,
   });
-
-  double get totalProfitToday => totalIncomeToday - totalExpenseToday;
 
   DashboardState copyWith({
     FormzSubmissionStatus? status,
     bool? hasBusinesses,
     List<DashboardBusinessModel>? businesses,
-    double? totalIncomeToday,
-    double? totalExpenseToday,
+    double? totalRevenueToday,
+    double? totalProfitToday,
     String? errorMessage,
   }) {
     return DashboardState(
       status: status ?? this.status,
       hasBusinesses: hasBusinesses ?? this.hasBusinesses,
       businesses: businesses ?? this.businesses,
-      totalIncomeToday: totalIncomeToday ?? this.totalIncomeToday,
-      totalExpenseToday: totalExpenseToday ?? this.totalExpenseToday,
+      totalRevenueToday: totalRevenueToday ?? this.totalRevenueToday,
+      totalProfitToday: totalProfitToday ?? this.totalProfitToday,
       errorMessage: errorMessage ?? this.errorMessage,
     );
   }
@@ -42,8 +40,8 @@ class DashboardState extends Equatable {
         status,
         hasBusinesses,
         businesses,
-        totalIncomeToday,
-        totalExpenseToday,
+        totalRevenueToday,
+        totalProfitToday,
         errorMessage,
       ];
 }

@@ -4,17 +4,15 @@ import '../model/dashboard_business_model.dart';
 class DashboardData {
   final bool hasBusinesses;
   final List<DashboardBusinessModel> businesses;
-  final double totalIncomeToday;
-  final double totalExpenseToday;
+  final double totalRevenueToday;
+  final double totalProfitToday;
 
   DashboardData({
     required this.hasBusinesses,
     this.businesses = const [],
-    this.totalIncomeToday = 0.0,
-    this.totalExpenseToday = 0.0,
+    this.totalRevenueToday = 0.0,
+    this.totalProfitToday = 0.0,
   });
-
-  double get totalProfitToday => totalIncomeToday - totalExpenseToday;
 }
 
 class DashboardRepo {
@@ -45,41 +43,28 @@ class DashboardRepo {
     // 2. Fetch sales for today across owner's businesses
     final salesResponse = await _supabase
         .from('sales')
-        .select('business_id, total_amount')
-        .inFilter('business_id', businessIds)
-        .gte('created_at', startOfDay)
-        .lte('created_at', endOfDay);
-
-    // 3. Fetch expenses for today across owner's businesses
-    final expensesResponse = await _supabase
-        .from('expenses')
-        .select('business_id, amount')
+        .select('business_id, total_amount, profit')
         .inFilter('business_id', businessIds)
         .gte('created_at', startOfDay)
         .lte('created_at', endOfDay);
 
     final salesList = salesResponse as List;
-    final expensesList = expensesResponse as List;
 
-    // Map to aggregate income & expense per business
-    final Map<String, double> incomeMap = {};
-    final Map<String, double> expenseMap = {};
+    // Map to aggregate revenue & profit per business
+    final Map<String, double> revenueMap = {};
+    final Map<String, double> profitMap = {};
 
-    double grandTotalIncome = 0.0;
-    double grandTotalExpense = 0.0;
+    double grandTotalRevenue = 0.0;
+    double grandTotalProfit = 0.0;
 
     for (final sale in salesList) {
       final bId = sale['business_id'] as String;
       final amount = (sale['total_amount'] as num?)?.toDouble() ?? 0.0;
-      incomeMap[bId] = (incomeMap[bId] ?? 0.0) + amount;
-      grandTotalIncome += amount;
-    }
-
-    for (final expense in expensesList) {
-      final bId = expense['business_id'] as String;
-      final amount = (expense['amount'] as num?)?.toDouble() ?? 0.0;
-      expenseMap[bId] = (expenseMap[bId] ?? 0.0) + amount;
-      grandTotalExpense += amount;
+      final profit = (sale['profit'] as num?)?.toDouble() ?? 0.0;
+      revenueMap[bId] = (revenueMap[bId] ?? 0.0) + amount;
+      profitMap[bId] = (profitMap[bId] ?? 0.0) + profit;
+      grandTotalRevenue += amount;
+      grandTotalProfit += profit;
     }
 
     final List<DashboardBusinessModel> dashboardBusinesses = businessList.map((b) {
@@ -88,16 +73,16 @@ class DashboardRepo {
       return DashboardBusinessModel(
         id: bId,
         name: bName,
-        incomeToday: incomeMap[bId] ?? 0.0,
-        expenseToday: expenseMap[bId] ?? 0.0,
+        revenueToday: revenueMap[bId] ?? 0.0,
+        profitToday: profitMap[bId] ?? 0.0,
       );
     }).toList();
 
     return DashboardData(
       hasBusinesses: true,
       businesses: dashboardBusinesses,
-      totalIncomeToday: grandTotalIncome,
-      totalExpenseToday: grandTotalExpense,
+      totalRevenueToday: grandTotalRevenue,
+      totalProfitToday: grandTotalProfit,
     );
   }
 }
