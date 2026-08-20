@@ -279,8 +279,8 @@ class _AddStockScreenState extends State<AddStockScreen> {
                                   enabled: !isSubmitting,
                                   keyboardType: const TextInputType.numberWithOptions(decimal: true),
                                   decoration: AppStyles.inputDecoration(
-                                    labelText: 'Selling Price per ${selectedProduct.sellingUnit}',
-                                    hintText: 'Example: 3',
+                                    labelText: 'Selling Price per ${selectedProduct.buyingUnit}',
+                                    hintText: 'Example: 40',
                                     prefixIcon: const Padding(
                                       padding: EdgeInsets.all(16.0),
                                       child: Text('₹', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
@@ -293,7 +293,7 @@ class _AddStockScreenState extends State<AddStockScreen> {
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
-                                  'Enter the price you will charge customer per ${selectedProduct.sellingUnit}. Example: if you sell 1 tablet for ₹3 enter 3',
+                                  'Enter the price you will charge customer per ${selectedProduct.buyingUnit}. Example: if you sell 1 strip for ₹40 enter 40. App will automatically calculate price per ${selectedProduct.sellingUnit} using units per pack.',
                                   style: AppStyles.label.copyWith(fontSize: 11),
                                 ),
                                 if (state.sellingPriceError != null) ...[

@@ -28,11 +28,25 @@ class StockScreen extends StatefulWidget {
 class _StockScreenState extends State<StockScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final TextEditingController _searchController = TextEditingController();
+  StockBloc? _stockBloc;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    _tabController.addListener(_handleTabSelection);
+  }
+
+  void _handleTabSelection() {
+    if (!_tabController.indexIsChanging) {
+      _stockBloc?.add(FetchStockDataRequested(widget.businessId));
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _stockBloc?.add(FetchStockDataRequested(widget.businessId));
   }
 
   @override
@@ -71,8 +85,12 @@ class _StockScreenState extends State<StockScreen> with SingleTickerProviderStat
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => StockBloc(repo: StockRepo())
-        ..add(FetchStockDataRequested(widget.businessId)),
+      create: (context) {
+        final bloc = StockBloc(repo: StockRepo())
+          ..add(FetchStockDataRequested(widget.businessId));
+        _stockBloc = bloc;
+        return bloc;
+      },
       child: Builder(
         builder: (context) {
           return Scaffold(

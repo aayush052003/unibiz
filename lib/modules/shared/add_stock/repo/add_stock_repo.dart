@@ -31,6 +31,7 @@ class AddStockRepo {
       'product_id': productId,
       'business_id': businessId,
       'supplier_id': null,
+      'quantity_purchased': quantity,
       'quantity_remaining': quantity,
       'purchase_price': purchasePrice,
       'selling_price': sellingPrice,

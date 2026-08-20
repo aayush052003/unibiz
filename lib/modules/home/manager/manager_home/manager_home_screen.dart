@@ -134,9 +134,18 @@ class _ManagerHomeScreenState extends State<ManagerHomeScreen> {
                 index: _currentIndex,
                 children: [
                   const ManagerHomeTab(),
-                  const ManagerSalesTab(),
-                  ManagerStockTab(businessId: businessId),
-                  ManagerProductsTab(businessId: businessId),
+                  ManagerSalesTab(
+                    key: ValueKey(_currentIndex == 1 ? DateTime.now() : 'manager_sales'),
+                    businessId: businessId,
+                  ),
+                  ManagerStockTab(
+                    key: ValueKey(_currentIndex == 2 ? DateTime.now() : 'manager_stock'),
+                    businessId: businessId,
+                  ),
+                  ManagerProductsTab(
+                    key: ValueKey(_currentIndex == 3 ? DateTime.now() : 'manager_products'),
+                    businessId: businessId,
+                  ),
                   const ManagerManageTab(),
                 ],
               );
