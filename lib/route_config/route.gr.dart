@@ -29,8 +29,6 @@ import 'package:unibiz/modules/home/owner/add_business/add_business_screen.dart'
     as _i1;
 import 'package:unibiz/modules/home/owner/add_employee/add_employee_screen.dart'
     as _i2;
-import 'package:unibiz/modules/home/owner/add_expense/add_expense_screen.dart'
-    as _i3;
 import 'package:unibiz/modules/home/owner/business_detail/business_detail_screen.dart'
     as _i6;
 import 'package:unibiz/modules/home/owner/dashboard/dashboard_screen.dart'
@@ -38,9 +36,6 @@ import 'package:unibiz/modules/home/owner/dashboard/dashboard_screen.dart'
 import 'package:unibiz/modules/home/owner/data/data_screen.dart' as _i8;
 import 'package:unibiz/modules/home/owner/employee/owner_employee_screen.dart'
     as _i15;
-import 'package:unibiz/modules/home/owner/expense/expense_screen.dart' as _i11;
-import 'package:unibiz/modules/home/owner/expense_detail/expense_detail_screen.dart'
-    as _i10;
 import 'package:unibiz/modules/home/owner/inventory/inventory_screen.dart'
     as _i12;
 import 'package:unibiz/modules/home/owner/manage/manage_screen.dart' as _i13;
@@ -50,9 +45,14 @@ import 'package:unibiz/modules/home/owner/profile/owner_profile_screen.dart'
     as _i18;
 import 'package:unibiz/modules/home/owner/sales/sales_screen.dart' as _i24;
 import 'package:unibiz/modules/home/owner/shop/shop_screen.dart' as _i26;
+import 'package:unibiz/modules/shared/add_expense/add_expense_screen.dart'
+    as _i3;
 import 'package:unibiz/modules/shared/add_product/add_product_screen.dart'
     as _i4;
 import 'package:unibiz/modules/shared/add_stock/add_stock_screen.dart' as _i5;
+import 'package:unibiz/modules/shared/expense/expense_screen.dart' as _i11;
+import 'package:unibiz/modules/shared/expense_detail/expense_detail_screen.dart'
+    as _i10;
 import 'package:unibiz/modules/shared/products/products_screen.dart' as _i21;
 import 'package:unibiz/modules/shared/sales/sales_screen.dart' as _i25;
 import 'package:unibiz/modules/shared/stock/stock_screen.dart' as _i28;
@@ -584,18 +584,41 @@ class RouteDeciderRoute extends _i29.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i24.SalesScreen]
-class SalesRoute extends _i29.PageRouteInfo<void> {
-  const SalesRoute({List<_i29.PageRouteInfo>? children})
-    : super(SalesRoute.name, initialChildren: children);
+class SalesRoute extends _i29.PageRouteInfo<SalesRouteArgs> {
+  SalesRoute({
+    _i30.Key? key,
+    _i30.VoidCallback? onBack,
+    List<_i29.PageRouteInfo>? children,
+  }) : super(
+         SalesRoute.name,
+         args: SalesRouteArgs(key: key, onBack: onBack),
+         initialChildren: children,
+       );
 
   static const String name = 'SalesRoute';
 
   static _i29.PageInfo page = _i29.PageInfo(
     name,
     builder: (data) {
-      return const _i24.SalesScreen();
+      final args = data.argsAs<SalesRouteArgs>(
+        orElse: () => const SalesRouteArgs(),
+      );
+      return _i24.SalesScreen(key: args.key, onBack: args.onBack);
     },
   );
+}
+
+class SalesRouteArgs {
+  const SalesRouteArgs({this.key, this.onBack});
+
+  final _i30.Key? key;
+
+  final _i30.VoidCallback? onBack;
+
+  @override
+  String toString() {
+    return 'SalesRouteArgs{key: $key, onBack: $onBack}';
+  }
 }
 
 /// generated route for

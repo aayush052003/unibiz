@@ -2,9 +2,9 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import '../../../../../helper/add_expense/expense_amount_input.dart';
-import '../../../../../helper/add_expense/expense_description_input.dart';
-import '../../../../../helper/hive_service.dart';
+import '../../../../helper/add_expense/expense_amount_input.dart';
+import '../../../../helper/add_expense/expense_description_input.dart';
+import '../../../../helper/hive_service.dart';
 import '../repo/add_expense_repo.dart';
 
 part 'add_expense_event.dart';

@@ -45,5 +45,6 @@ class HiveService {
   static String? getFirstName() => _box?.get(_keyFirstName);
   static String? getLastName() => _box?.get(_keyLastName);
   static String? getRole() => _box?.get(_keyRole);
+  static String? getUserRole() => getRole();
   static String? getUniqueId() => _box?.get(_keyUniqueId);
 }

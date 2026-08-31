@@ -49,6 +49,65 @@ class ManagerManageTab extends StatelessWidget {
     );
   }
 
+  Future<void> _navigateToExpense(BuildContext context) async {
+    try {
+      final userId = HiveService.getUserId();
+      if (userId == null) return;
+
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => const Center(
+          child: CircularProgressIndicator(color: AppColors.primary),
+        ),
+      );
+
+      final response = await Supabase.instance.client
+          .from('business_members')
+          .select('business_id, businesses(name)')
+          .eq('user_id', userId)
+          .eq('role', 'manager')
+          .maybeSingle();
+
+      if (context.mounted) {
+        Navigator.of(context).pop(); // Dismiss loader
+      }
+
+      if (response != null && response['business_id'] != null) {
+        final businessId = response['business_id'] as String;
+        final businessName = (response['businesses'] as Map<String, dynamic>?)?['name'] as String? ?? 'Business';
+
+        if (context.mounted) {
+          context.router.push(
+            ExpenseDetailRoute(
+              businessId: businessId,
+              businessName: businessName,
+            ),
+          );
+        }
+      } else {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('No business assigned to this manager'),
+              backgroundColor: AppColors.error,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      if (context.mounted) {
+        Navigator.of(context).pop(); // Dismiss loader
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error: ${e.toString()}'),
+            backgroundColor: AppColors.error,
+          ),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,38 +130,7 @@ class ManagerManageTab extends StatelessWidget {
               _buildManageTile(
                 icon: Icons.receipt_long_outlined,
                 title: 'Expense',
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (ctx) => AlertDialog(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      title: Text(
-                        'Expense',
-                        style: AppStyles.heading.copyWith(fontSize: 16),
-                      ),
-                      content: Text(
-                        'Expense Coming Soon',
-                        style: AppStyles.body.copyWith(
-                          color: AppColors.textSecondary,
-                        ),
-                      ),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.of(ctx).pop(),
-                          child: Text(
-                            'OK',
-                            style: AppStyles.body.copyWith(
-                              color: AppColors.primary,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
+                onTap: () => _navigateToExpense(context),
               ),
               const Spacer(),
               ElevatedButton(
