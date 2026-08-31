@@ -21,8 +21,7 @@ import 'package:unibiz/modules/auth/role_selection/role_selection_screen.dart'
     as _i22;
 import 'package:unibiz/modules/auth/staff_sign_in/staff_sign_in_screen.dart'
     as _i27;
-import 'package:unibiz/modules/home/employee/employee_home/employee_home_screen.dart'
-    as _i9;
+import 'package:unibiz/modules/home/employee/employee_home_screen.dart' as _i9;
 import 'package:unibiz/modules/home/manager/manager_home/manager_home_screen.dart'
     as _i14;
 import 'package:unibiz/modules/home/owner/add_business/add_business_screen.dart'
