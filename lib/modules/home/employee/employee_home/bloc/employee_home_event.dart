@@ -16,3 +16,12 @@ class FetchEmployeeBusinessRequested extends EmployeeHomeEvent {
   @override
   List<Object?> get props => [userId];
 }
+
+class RefreshEmployeeHomeRequested extends EmployeeHomeEvent {
+  final String userId;
+
+  const RefreshEmployeeHomeRequested(this.userId);
+
+  @override
+  List<Object?> get props => [userId];
+}

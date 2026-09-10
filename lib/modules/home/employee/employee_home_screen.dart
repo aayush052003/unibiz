@@ -39,7 +39,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
           backgroundColor: AppColors.background,
           body: BlocBuilder<EmployeeHomeBloc, EmployeeHomeState>(
             builder: (context, state) {
-              if (state.status == FormzSubmissionStatus.inProgress) {
+              if (state.status == FormzSubmissionStatus.inProgress && state.businessId == null) {
                 return const SafeArea(
                   child: Center(
                     child: CircularProgressIndicator(color: activeColor),
@@ -47,7 +47,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                 );
               }
 
-              if (state.status == FormzSubmissionStatus.failure) {
+              if (state.status == FormzSubmissionStatus.failure && state.businessId == null) {
                 return SafeArea(
                   child: Center(
                     child: Padding(
@@ -161,6 +161,11 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
               return BottomNavigationBar(
                 currentIndex: _currentIndex,
                 onTap: (index) {
+                  if (index == 0 && _currentIndex != 0) {
+                    context
+                        .read<EmployeeHomeBloc>()
+                        .add(RefreshEmployeeHomeRequested(userId));
+                  }
                   setState(() {
                     _currentIndex = index;
                   });

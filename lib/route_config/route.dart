@@ -34,5 +34,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: BusinessDataDetailRoute.page),
         AutoRoute(page: ManagerHomeRoute.page),
         AutoRoute(page: EmployeeHomeRoute.page),
+        AutoRoute(page: ManagerOutOfStockRoute.page),
+        AutoRoute(page: EmployeeOutOfStockRoute.page),
       ];
 }

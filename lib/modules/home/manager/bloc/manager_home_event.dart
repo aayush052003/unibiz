@@ -16,3 +16,12 @@ class FetchManagerBusinessRequested extends ManagerHomeEvent {
   @override
   List<Object?> get props => [userId];
 }
+
+class RefreshManagerHomeRequested extends ManagerHomeEvent {
+  final String userId;
+
+  const RefreshManagerHomeRequested(this.userId);
+
+  @override
+  List<Object?> get props => [userId];
+}
