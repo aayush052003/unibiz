@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:auto_route/auto_route.dart';
 import '../../../../constants/colors.dart';
+import '../../../../helper/hive_service.dart';
 import '../dashboard/dashboard_screen.dart';
 import '../data/data_screen.dart';
+import '../data/bloc/owner_data_bloc.dart';
+import '../data/repo/owner_data_repo.dart';
 import '../inventory/inventory_screen.dart';
 import '../sales/sales_screen.dart';
 import '../manage/manage_screen.dart';
@@ -27,7 +31,11 @@ class _OwnerHomeScreenState extends State<OwnerHomeScreen> {
           index: _currentIndex,
           children: [
             DashboardScreen(key: UniqueKey()),
-            const DataScreen(),
+            BlocProvider(
+              create: (context) => OwnerDataBloc(repo: OwnerDataRepo())
+                ..add(OwnerDataInitialLoadRequested(HiveService.getUserId() ?? '')),
+              child: const DataScreen(),
+            ),
             InventoryScreen(key: ValueKey(_currentIndex == 2 ? DateTime.now() : 'inventory')),
             const SalesScreen(),
             const ManageScreen(),
